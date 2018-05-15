@@ -10,7 +10,7 @@ package threads;
 
 import java.util.Random;
 
-public class BruteForceCracker {
+public class ModdedCracker {
 	static long code = (long)(new Random().nextDouble() * 1_000_000_000);
 	
 	static long startTime;
@@ -18,17 +18,24 @@ public class BruteForceCracker {
 	static float elapsedTime;
 	
 	public static void main(String[] args) {
-		System.out.println("Starting Brute Force Checker");
+		System.out.println("Starting Modded Checker");
 		startTime = System.currentTimeMillis();
-		
-		int ctr = 0;
-		while(!checkCode(ctr++));
+		Thread a = new Thread(()->check(0));
+		Thread b = new Thread(()->check(1));
+		Thread c = new Thread(()->check(2));
+		Thread d = new Thread(()->check(3));
+		Thread e = new Thread(()->check(4));
+	}
+	public static void check(int a) {
+		int ctr = a;
+		while(!checkCode(ctr+=5));
 		
 		endTime = System.currentTimeMillis();
 		elapsedTime = (float)(endTime - startTime);
 		elapsedTime /= 1000.f;
 		System.out.println("Total time taken: " + elapsedTime + " seconds");
 	}
+	
 	
 	public static boolean checkCode(long p){
 		if(p == code){
