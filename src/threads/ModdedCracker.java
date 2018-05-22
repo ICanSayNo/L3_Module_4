@@ -16,24 +16,30 @@ public class ModdedCracker {
 	static long startTime;
 	static long endTime;
 	static float elapsedTime;
+	static volatile boolean done = false;
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Modded Checker");
-		startTime = System.currentTimeMillis();
 		Thread a = new Thread(()->check(0));
 		Thread b = new Thread(()->check(1));
 		Thread c = new Thread(()->check(2));
-		Thread d = new Thread(()->check(3));
-		Thread e = new Thread(()->check(4));
-	}
-	public static void check(int a) {
-		int ctr = a;
-		while(!checkCode(ctr+=5));
+		startTime = System.currentTimeMillis();
+		a.start();
+		b.start();
+		c.start();
+		while(!done) {
 		
+		}
 		endTime = System.currentTimeMillis();
 		elapsedTime = (float)(endTime - startTime);
 		elapsedTime /= 1000.f;
 		System.out.println("Total time taken: " + elapsedTime + " seconds");
+	}
+	public static void check(int a) {
+		int ctr = a;
+		while(!checkCode(ctr+=3)&&!done);
+		done = true;
+	
 	}
 	
 	
